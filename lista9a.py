@@ -1,3 +1,5 @@
+import cv2
+
 def merge(A, p, q, r):
  	L = [0] * (r +1)
 
@@ -31,10 +33,17 @@ def mergeSort(A,p,r):
 
 def selectMedian(A, n):
 	mergeSort(A, 0,n-1)
-	i = (n) /2
+	i = (n)/2
 	return (A[i])
 
 
+def readImage (nome):
+	imagem = cv2.imread(nome)
+	gray_image = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
+	print "Altura (height): %d pixels" % (gray_image.shape[0])
+	print "Largura (width): %d pixels" % (gray_image.shape[1])
+
+	cv2.imshow("IMAGE", gray_image)
 
 A = [10,9,5,3,2,4,1,7,6,8]
 print(A)
@@ -42,3 +51,6 @@ print(A)
 mediana = selectMedian(A, 10)
 print (A)
 print (mediana)
+
+#readImage("tucano.jpeg")
+readImage("cinza.jpg")
