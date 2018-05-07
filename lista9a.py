@@ -1,6 +1,8 @@
 import cv2
 import math 
 import random
+import time
+import numpy 
 
 def merge(A, p, q, r):
  	L = [0] * (r +1)
@@ -80,23 +82,67 @@ def readImage (nome):
 	print "Altura (height): %d pixels" % (gray_image.shape[0])
 	print "Largura (width): %d pixels" % (gray_image.shape[1])
 
-	cv2.imshow("IMAGE", gray_image)
-	cv2.waitKey(0)
 	return gray_image
 
-def filtro_mediana(image, p, q):
-	if ( (p<2 or p >= image.shape[0]) or (q<2 or q >= image.shape[1])):
-		print ("Tamanho invalido para janela de filtro!")
+def aplica_janela(imagem, p, q, i, j):
+	vetor = [0] * (p*q)
+	k = 0
+	for r in range( i - (p/2), i + (p/2)):
+		for l in range(j - (q/2), j+(q/2)):
+			vetor[k] = imagem[r,l]
+			k += 1
 
-A = [10,9,5,3,2,4,1,7,6,8]
-print(A)
+	print("Vetor: ", vetor)
+	#exit()
+	#a = selectMedian(vetor, k)
+	a = select_NL(vetor, 0, k-1, math.ceil((k+1)/2.0) )
+	print(a)
+	return a
+
+
+def filtro_mediana(imagem, p, q):
+	imagem_filtrada = numpy.zeros((imagem.shape[0],imagem.shape[1]), dtype=numpy.float64)
+
+	if ( (p<2 or p >= imagem.shape[0]) or (q<2 or q >= imagem.shape[1])):
+		print ("Tamanho invalido para janela de filtro!")
+	else:
+		for i in range(0,imagem.shape[0]):
+			for j in range(0, imagem.shape[1]):
+				print ("M[",i ,",", j, "]= ", image[i,j])
+				if ( (i - (p/2) >= 0) and (j - (q/2) >= 0) and (i+(p/2) < imagem.shape[0]) and (j+(p/2) < imagem.shape[1]) ):
+					#print(imagem)
+					#exit()
+					imagem_filtrada[i,j]= aplica_janela(imagem, p, q, i, j)
+					print("Imagem original- [i, j]= ", imagem[i,j])
+					print("Imagem filtrada- [i, j]= ", imagem_filtrada[i,j])
+					#exit()
+					#if (p)
+	return imagem_filtrada
+
+
+#A = [10,9,5,3,2,4,1,7,6,8]
+#print(A)
 #mergeSort(A,0,9)
-#mediana = selectMedian(A, 10)
 #mediana = select_NL(A,0,9, math.ceil((10+1)/2.0))
 #mediana = select_NL(A,0,9,math.floor((10+1)/2.0))
 #print (A)
 #print (mediana)
 
-#readImage("tucano.jpeg")
-image = readImage("cinza.jpg")
-filtro_mediana(image, 300, 120)
+image = readImage("tucano.jpeg")
+#image = readImage("cinza.jpg")
+#image = readImage("camera.jpg")
+cv2.imshow("IMAGE", image)
+cv2.waitKey(0)
+
+ini = time.time()
+imagem_filtrada = filtro_mediana(image, 3, 3)
+print imagem_filtrada
+fim = time.time()
+print "Tempo de execucao: ", fim-ini
+cv2.imshow("IMAGE", imagem_filtrada)
+cv2.waitKey(0)
+
+median = cv2.medianBlur(image,3)
+cv2.imshow("IMAGE", median)
+cv2.waitKey(0)
+
