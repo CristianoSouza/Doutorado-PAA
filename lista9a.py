@@ -114,8 +114,8 @@ imagem_global = readImage(nome_imagem)
 #mediana (n) = 1
 #mediana (nlogn) = 0
 algoritmo_mediana = 0
-tamanho_janela_p = 25
-tamanho_janela_q = 25
+tamanho_janela_p = 23
+tamanho_janela_q = 23
 
 ini = time.time()
 imagem_filtro = filtro_mediana(imagem_global[:], tamanho_janela_p, tamanho_janela_q, algoritmo_mediana)

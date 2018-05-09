@@ -197,3 +197,43 @@ IMAGEM: paisagem.jpg
 
 
 
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 21 X 21
+	-- Tempo inicial: 1525885454.78
+	-- Tempo final: 1525885821.87
+	-- Tempo execucao total: 367.093325853  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 21 X 21
+	-- Tempo inicial: 1525885862.28
+	-- Tempo final: 1525887680.27
+	-- Tempo execucao total: 1817.99079394  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 23 X 23
+	-- Tempo inicial: 1525887702.08
+	-- Tempo final: 1525888133.27
+	-- Tempo execucao total: 431.186913013  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 23 X 23
+	-- Tempo inicial: 1525888152.84
+	-- Tempo final: 1525890445.56
+	-- Tempo execucao total: 2292.71445107  
+
+
+
