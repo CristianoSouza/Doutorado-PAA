@@ -1,5 +1,247 @@
+<<<<<<< HEAD
 IMAGEM: futebol.jpg
 -- Tamanho da Janela: 3 X 3
 -- Tempo inicial: 1525748988.06
 -- Tempo final: 1525749033.95
 -- Tempo execucao total: 45.887280941  
+=======
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 3 X 3
+	-- Tempo inicial: 1525797785.67
+	-- Tempo final: 1525797810.05
+	-- Tempo execucao total: 24.3830571175  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 3 X 3
+	-- Tempo inicial: 1525798525.17
+	-- Tempo final: 1525798550.4
+	-- Tempo execucao total: 25.2275538445  
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 5 X 5
+	-- Tempo inicial: 1525798656.22
+	-- Tempo final: 1525798696.67
+	-- Tempo execucao total: 40.4442090988  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 5 X 5
+	-- Tempo inicial: 1525798787.47
+	-- Tempo final: 1525798849.44
+	-- Tempo execucao total: 61.9720978737  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 7 X 7
+	-- Tempo inicial: 1525799856.05
+	-- Tempo final: 1525799916.75
+	-- Tempo execucao total: 60.7002630234  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 7 X 7
+	-- Tempo inicial: 1525800037.88
+	-- Tempo final: 1525800172.0
+	-- Tempo execucao total: 134.117254972  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 9 X 9
+	-- Tempo inicial: 1525800233.3
+	-- Tempo final: 1525800321.8
+	-- Tempo execucao total: 88.5035991669  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 9 X 9
+	-- Tempo inicial: 1525800355.24
+	-- Tempo final: 1525800594.04
+	-- Tempo execucao total: 238.805572033  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 11 X 11
+	-- Tempo inicial: 1525800635.54
+	-- Tempo final: 1525800756.12
+	-- Tempo execucao total: 120.586702108  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 11 X 11
+	-- Tempo inicial: 1525800773.81
+	-- Tempo final: 1525801165.0
+	-- Tempo execucao total: 391.187102079  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 13 X 13
+	-- Tempo inicial: 1525801231.84
+	-- Tempo final: 1525801390.38
+	-- Tempo execucao total: 158.544473886  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 13 X 13
+	-- Tempo inicial: 1525801452.18
+	-- Tempo final: 1525802036.3
+	-- Tempo execucao total: 584.113286018  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 15 X 15
+	-- Tempo inicial: 1525802247.06
+	-- Tempo final: 1525802460.79
+	-- Tempo execucao total: 213.731586933  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 15 X 15
+	-- Tempo inicial: 1525802500.77
+	-- Tempo final: 1525803305.65
+	-- Tempo execucao total: 804.878239155  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 17 X 17
+	-- Tempo inicial: 1525803354.67
+	-- Tempo final: 1525803610.05
+	-- Tempo execucao total: 255.383650064  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 17 X 17
+	-- Tempo inicial: 1525803643.58
+	-- Tempo final: 1525804714.53
+	-- Tempo execucao total: 1070.95259213  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 19 X 19
+	-- Tempo inicial: 1525804789.2
+	-- Tempo final: 1525805102.74
+	-- Tempo execucao total: 313.545382977  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 19 X 19
+	-- Tempo inicial: 1525805127.55
+	-- Tempo final: 1525806571.39
+	-- Tempo execucao total: 1443.84177804  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 25 X 25
+	-- Tempo inicial: 1525806719.54
+	-- Tempo final: 1525807243.69
+	-- Tempo execucao total: 524.145744085  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 25 X 25
+	-- Tempo inicial: 1525807280.03
+	-- Tempo final: 1525810131.36
+	-- Tempo execucao total: 2851.33629513  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 21 X 21
+	-- Tempo inicial: 1525885454.78
+	-- Tempo final: 1525885821.87
+	-- Tempo execucao total: 367.093325853  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 21 X 21
+	-- Tempo inicial: 1525885862.28
+	-- Tempo final: 1525887680.27
+	-- Tempo execucao total: 1817.99079394  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(n)
+	-- Tamanho da Janela: 23 X 23
+	-- Tempo inicial: 1525887702.08
+	-- Tempo final: 1525888133.27
+	-- Tempo execucao total: 431.186913013  
+
+
+
+IMAGEM: paisagem.jpg
+	IMAGEM: 720 X 900
+	Filtro: O(nlogn)
+	-- Tamanho da Janela: 23 X 23
+	-- Tempo inicial: 1525888152.84
+	-- Tempo final: 1525890445.56
+	-- Tempo execucao total: 2292.71445107  
+
+
+
+>>>>>>> 358a63354c9d5e3f7e551fbead87adec141305f9

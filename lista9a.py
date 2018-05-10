@@ -30,10 +30,9 @@ def mergeSort(A,p,r):
         merge(A, p, q, r)
 
 
-def selectMedian(A, n):
+def selectMedian(A, n, i):
 	mergeSort(A, 0,n-1)
-	i = (n)/2
-	return (A[i])
+	return (A[int(i)])
 
 def troca(A,i,j):
 	aux = A[i]
@@ -73,7 +72,7 @@ def readImage (nome):
 	gray_image = cv2.cvtColor(imagem, cv2.COLOR_BGR2GRAY)
 	return gray_image
 
-def aplica_janela(imagem, p, q, i, j):
+def aplica_janela(imagem, p, q, i, j, algoritmo_mediana):
 	vetor = [0] * (p*q)
 	k = 0
 	if ((p % 2) == 0 or (q % 2) == 0):
@@ -86,11 +85,14 @@ def aplica_janela(imagem, p, q, i, j):
 			for l in range(j - (q/2), j+(q/2)):
 				vetor[k] = imagem[r,l]
 				k += 1
-	a = select_NL(vetor, 0, k-1, math.floor((k+1)/2.0) )
+	if (algoritmo_mediana == 1):
+		a = select_NL(vetor, 0, k-1, math.floor((k+1)/2.0) )
+	else:
+		a = selectMedian(vetor, k, math.floor((k+1)/2.0))
 	return a
 
 
-def filtro_mediana(imagem, p, q):
+def filtro_mediana(imagem, p, q, algoritmo_mediana):
 	imagem_filtrada = copy.copy(imagem)
 	if ( (p<2 or p >= imagem.shape[0]) or (q<2 or q >= imagem.shape[1])):
 		print ("Tamanho invalido para janela de filtro!")
@@ -99,31 +101,49 @@ def filtro_mediana(imagem, p, q):
 			for j in range(0, imagem.shape[1]):
 				print ("M[",i ,",", j, "]= ", imagem[i,j])
 				if ( (i - (p/2) >= 0) and (j - (q/2) >= 0) and (i+(p/2) < imagem.shape[0]) and (j+(q/2) < imagem.shape[1]) ):
-					imagem_filtrada[i,j]= aplica_janela(imagem, p, q, i, j)
+					imagem_filtrada[i,j]= aplica_janela(imagem, p, q, i, j, algoritmo_mediana)
 				else:
 					imagem_filtrada[i,j] = 0
 	return imagem_filtrada
 
-#640x480
-nome_imagem = "tucano.jpeg"
-#nome_imagem = "camera.jpg"
-nome_imagem = "futebol.jpg"
+#nome_imagem = "tucano.jpeg"
+#nome_imagem = "camera.jpg
+nome_imagem = "paisagem.jpg"
 imagem_global = readImage(nome_imagem)
-tamanho_janela_p = 3
-tamanho_janela_q = 3
+
+#mediana (n) = 1
+#mediana (nlogn) = 0
+algoritmo_mediana = 0
+tamanho_janela_p = 23
+tamanho_janela_q = 23
+
 
 ini = time.time()
-imagem_filtro = filtro_mediana(imagem_global[:], tamanho_janela_p, tamanho_janela_q)
+imagem_filtro = filtro_mediana(imagem_global[:], tamanho_janela_p, tamanho_janela_q, algoritmo_mediana)
 print imagem_filtro
 fim = time.time()
 
-file = open("result.txt","w+") 
+arquivo = open("result.txt", "r")
+conteudo = arquivo.readlines()
+
+file = open("result.txt","w")
+file.writelines(conteudo) 
  
 file.write("""IMAGEM: """ + nome_imagem  + """
--- Tamanho da Janela: """+ str(tamanho_janela_p) +""" X """ + str(tamanho_janela_q)+ """
--- Tempo inicial: """+ str(ini) + """
--- Tempo final: """+ str(fim) + """
--- Tempo execucao total: """+ str(fim-ini) + """  
+	IMAGEM: """ + str(imagem_global.shape[0])  + """ X """ + str(imagem_global.shape[1]) + """
+	Filtro: """)
+if(algoritmo_mediana == 1): 
+	file.write(str("O(n)"))
+else: 
+	file.write("O(nlogn)")
+file.write("""
+	-- Tamanho da Janela: """+ str(tamanho_janela_p) +""" X """ + str(tamanho_janela_q)+ """
+	-- Tempo inicial: """+ str(ini) + """
+	-- Tempo final: """+ str(fim) + """
+	-- Tempo execucao total: """+ str(fim-ini) + """  
+
+
+
 """) 
  
 file.close() 
@@ -138,8 +158,8 @@ cv2.waitKey(0)
 
 median = cv2.medianBlur(imagem_global,tamanho_janela_p)
 
-cv2.namedWindow('Imagem Filtro Opencv', cv2.WINDOW_NORMAL)
-cv2.imshow("Imagem Filtro Opencv", median)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+#cv2.namedWindow('Imagem Filtro Opencv', cv2.WINDOW_NORMAL)
+#cv2.imshow("Imagem Filtro Opencv", median)
+#cv2.waitKey(0)
+#cv2.destroyAllWindows()
 
