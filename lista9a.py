@@ -104,10 +104,12 @@ def filtro_mediana(imagem, p, q):
 					imagem_filtrada[i,j] = 0
 	return imagem_filtrada
 
+#640x480
 nome_imagem = "tucano.jpeg"
 #nome_imagem = "camera.jpg"
+nome_imagem = "futebol.jpg"
 imagem_global = readImage(nome_imagem)
-tamanho_janela_p = 13
+tamanho_janela_p = 3
 tamanho_janela_q = 3
 
 ini = time.time()

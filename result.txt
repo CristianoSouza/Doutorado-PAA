@@ -1,5 +1,5 @@
-IMAGEM: tucano.jpeg
--- Tamanho da Janela: 13 X 3
--- Tempo inicial: 1525748276.33
--- Tempo final: 1525748281.55
--- Tempo execucao total: 5.21847009659  
+IMAGEM: futebol.jpg
+-- Tamanho da Janela: 3 X 3
+-- Tempo inicial: 1525748988.06
+-- Tempo final: 1525749033.95
+-- Tempo execucao total: 45.887280941  
