@@ -84,24 +84,54 @@ class Grafo:
 
     ####################################################################
 
-    def inicializa_Fonte(self, fonte):  # Funcao usado no BFS e Dijkstra Mtodo recebe um Objeto
-        for v in self.lista_vertices:
-            v.setEstimativa(99999)
-            v.setVisitado(False)
-        fonte.setVisitado(True)
-        fonte.setEstimativa(0)
+
+    def busca_adjacentes(self, u):  # Mtodo recebe um vertice
+        lista = []
+        for i in range(len(self.lista_arestas)):
+            origem = self.lista_arestas[i].getOrigem()
+            destino = self.lista_arestas[i].getDestino()
+            if (u.getId() == origem.getId()) and (destino.getCor() == "BRANCO"):
+                lista.append(destino)
+        return lista
+
+    def breadth_first_search(self, identificador):
+        fonte = self.busca_vertice(identificador)
+        if fonte is None:
+            return "Vertce Nulo"
+
+        for i in range(0,len(self.lista_vertices)):
+            self.lista_vertices[i].cor = "BRANCO"
+            self.lista_vertices[i].pai = []
+            self.lista_vertices[i].estimativa = 99999999    
+        fonte.cor = "CINZA"
+        fonte.pai = None
+        lista = [fonte]
+
+        while len(lista) != 0:
+            u = lista.pop(0)
+            print u
+            lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
+            for adj in lista_adjacentes:
+                adj.pai.append(u.getId())
+                adj.cor = "CINZA"
+                adj.estimativa += 1
+                lista.append(adj)
+            u.cor = "PRETO"
+
+
 
     ####################################################################
 
+
     def Breadth_first_search(self, identificador):
-        fonte = self.busca_Vertice(identificador)
+        fonte = self.busca_vertice(identificador)
         if fonte is None:
             return "Vertce Nulo"
         self.inicializa_Fonte(fonte)
         lista = [fonte]
         while 0 != len(lista):
             u = lista[0]
-            v = self.busca_Adjacente(u)  # retorna adjacente no visitado
+            v = self.busca_adjacente(u)  # retorna adjacente no visitado
             if v is None:
                 lista.pop(0)  # retiro o vertice sem adjacentes
 
@@ -120,7 +150,7 @@ class Grafo:
             print("Nao ha caminho")
         else:
             print(destino)
-            self.imprime_Grafo(origem, destino)
+            self.imprime_grafo(origem, destino)
 
     def imprime_grafo(self, origem, destino):
         if origem == destino:

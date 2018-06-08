@@ -5,6 +5,7 @@ class Vertice():
         self.input = 0
         self.output = 0
         self.visitado = False
+        self.cor = "Branca"
         self.pai = []
 
     def setVisitado(self, valor):
@@ -12,6 +13,12 @@ class Vertice():
 
     def getVisitado(self):
         return self.visitado
+    
+    def setCor(self, valor):
+        self.cor = valor
+
+    def getCor(self):
+        return self.cor
 
     def setId(self, id):
         self.id = id

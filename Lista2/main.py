@@ -222,14 +222,21 @@ for item_pre in pre:
     grafo.nova_aresta(item_pre[0], item_pre[1], 0)
     print("Criada nova aresta E(", item_pre[0], ",", item_pre[1], ")!")
 
-grafo.novo_vertice('a')
-grafo.novo_vertice('b')
-grafo.novo_vertice('c')
-grafo.novo_vertice('d')
+#grafo.Breadth_first_search('Python')
+#grafo.imprime_Grafo_com_Destino('Python', 'Go')
 
-grafo.nova_aresta('a','b', 5)
-grafo.nova_aresta('a','c', 5)
-grafo.nova_aresta('b','d', 5)
-grafo.nova_aresta('c','d', 5)
 
-grafo.imprime_grafo('a', 'd')
+grafo2 = Grafo()
+grafo2.novo_vertice('a')
+grafo2.novo_vertice('b')
+grafo2.novo_vertice('c')
+grafo2.novo_vertice('d')
+
+grafo2.nova_aresta('a','b', 5)
+#grafo2.nova_aresta('a','c', 5)
+#grafo2.nova_aresta('b','d', 5)
+grafo2.nova_aresta('c','d', 5)
+grafo2.nova_aresta('d','a', 5)
+
+grafo2.breadth_first_search('d')
+#grafo.imprime_grafo('a', 'd')
