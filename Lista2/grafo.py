@@ -14,13 +14,6 @@ class Grafo:
         # string = input(str("Identificador do Vertice: "))
         self.lista_vertices.append(Vertice(identificador))
 
-    def busca_aresta(self, u, v):  # Mtodo recebe dois objetos do tipo Vrtice
-        for w in self.lista_arestas:
-            origem = w.getOrigem()
-            destino = w.getDestino()
-            if origem.getId() == u.getId() and destino.getId() == v.getId():
-                return w
-
     def busca_vertice(self, identificador):  # Mtodo recebe um int
         for i in self.lista_vertices:
             if identificador == i.getId():
@@ -45,42 +38,64 @@ class Grafo:
         else:
             return False
 
-    def busca_adjacente(self, u):  # Mtodo recebe um vertice
-        for i in range(len(self.lista_arestas)):
-            origem = self.lista_arestas[i].getOrigem()
-            destino = self.lista_arestas[i].getDestino()
-            if (u.getId() == origem.getId()) and (destino.getVisitado() == False):
-                destino.setVisitado(True)  # Para que n retorn o mesmo vertice seguidas veses
-                return destino
-        else:
-            return None
-
     ####################################################################
 
-    def Depth_first_search(self):
+    def depth_first_search(self):
         self.tempo = 0
         for v in self.lista_vertices:
-            v.setVisitado(False)
+            v.setCor("BRANCO")
             v.input = 0
             v.output = 0
+            v.pai = []
         for v in self.lista_vertices:
-            if not v.getVisitado():
+            if (v.getCor() == "BRANCO"):
                 self.visita(v)
 
     def visita(self, u):
         print("Visitando o vertice: %s" % u.getId())
-        u.setVisitado(True)
+        u.setCor("CINZA")
         self.tempo += 1
         u.setImput(self.tempo)
-        v = self.busca_Adjacente(u)  # retorna apenas no visitado ou nulo
-        while v is not None:
-            v.pai.append(u.getId())
-            self.visita(v)
-            v = self.busca_Adjacente(u)
+        lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
+        for adj in lista_adjacentes:
+            adj.pai.append(u.getId())
+            self.visita(adj)
 
         self.tempo += 1
         u.setOutput(self.tempo)
+        u.setCor("PRETO")
         print("Voltando para: ", u.pai)
+
+    def ordenacaoTopologica(self):
+        self.tempo = 0
+        lista_ordenacao = []
+        for v in self.lista_vertices:
+            v.setCor("BRANCO")
+            v.input = 0
+            v.output = 0
+            v.pai = []
+        for v in self.lista_vertices:
+            if (v.getCor() == "BRANCO"):
+                self.visitaOrdTop(v,lista_ordenacao)
+
+        return lista_ordenacao
+
+    def visitaOrdTop(self, u, lista_final):
+        print("Visitando o vertice: %s" % u.getId())
+        u.setCor("CINZA")
+        self.tempo += 1
+        u.setImput(self.tempo)
+        lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
+        for adj in lista_adjacentes:
+            adj.pai.append(u.getId())
+            self.visitaOrdTop(adj,lista_final)
+
+        self.tempo += 1
+        u.setOutput(self.tempo)
+        u.setCor("PRETO")
+        lista_final.append(u)
+        print("Voltando para: ", u.pai)
+
 
     ####################################################################
 
@@ -100,10 +115,10 @@ class Grafo:
             return "Vertce Nulo"
 
         for i in range(0,len(self.lista_vertices)):
-            self.lista_vertices[i].cor = "BRANCO"
+            self.lista_vertices[i].setCor("BRANCO")
             self.lista_vertices[i].pai = []
-            self.lista_vertices[i].estimativa = 99999999    
-        fonte.cor = "CINZA"
+            self.lista_vertices[i].distancia = 99999999    
+        fonte.setCor("CINZA")
         fonte.pai = None
         lista = [fonte]
 
@@ -113,36 +128,14 @@ class Grafo:
             lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
             for adj in lista_adjacentes:
                 adj.pai.append(u.getId())
-                adj.cor = "CINZA"
-                adj.estimativa += 1
+                adj.setCor("CINZA")
+                adj.distancia += 1
                 lista.append(adj)
-            u.cor = "PRETO"
+            u.setCor("PRETO")
 
 
 
     ####################################################################
-
-
-    def Breadth_first_search(self, identificador):
-        fonte = self.busca_vertice(identificador)
-        if fonte is None:
-            return "Vertce Nulo"
-        self.inicializa_Fonte(fonte)
-        lista = [fonte]
-        while 0 != len(lista):
-            u = lista[0]
-            v = self.busca_adjacente(u)  # retorna adjacente no visitado
-            if v is None:
-                lista.pop(0)  # retiro o vertice sem adjacentes
-
-            else:
-                self.tempo += 1
-                v.setImput(self.tempo)
-                v.pai.append(u.getId())
-                v.setVisitado(True)
-                lista.append(v)
-
-            u.setVisitado(True)
 
     def imprime_Grafo_com_Destino(self, origem, destino):
         destino_Aux = self.busca_vertice(destino)
@@ -163,8 +156,7 @@ class Grafo:
                 print(destino_Aux.pai[0])
                 self.imprime_grafo(origem, destino_Aux.pai[0])
 
-    ####################################################################
-
+#################################################################### 
     def relaxa_Vertice(self, u, v, w):
         if v.getEstimativa() > (u.getEstimativa() + w.getPeso()):
             v.setEstimativa(u.getEstimativa() + w.getPeso())
@@ -181,7 +173,7 @@ class Grafo:
         for i in self.lista_vertices:
             lista.append(i)
         while len(lista) != 0:
-            lista.sort()  # ordeno a lista baseado na estimativa
+            lista.sort()  # ordeno a lista baseado na distancia
             u = lista[0]
             v = self.busca_Adjacente(u)
             if v is None:

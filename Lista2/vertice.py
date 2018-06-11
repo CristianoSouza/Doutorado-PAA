@@ -1,11 +1,11 @@
 class Vertice():
     def __init__(self, id):
         self.id = id
-        self.estimativa = 999999
+        self.distancia = 999999
         self.input = 0
         self.output = 0
         self.visitado = False
-        self.cor = "Branca"
+        self.cor = "BRANCO"
         self.pai = []
 
     def setVisitado(self, valor):
@@ -32,24 +32,24 @@ class Vertice():
     def setOutput(self, out):
         self.output = out
 
-    def setEstimativa(self, estimativa):
-        self.estimativa = estimativa
+    def setDistancia(self, distancia):
+        self.distancia = distancia
 
     def getEstimativa(self):
-        return self.estimativa
+        return self.distancia
 
     def __str__(self):
         return (" Vertice  : %s \n Estimativa: %i \n Tempo(%i\%i): " % (
-            self.id, self.estimativa, self.input, self.output))  # imprimir o predecesso
+            self.id, self.distancia, self.input, self.output))  # imprimir o predecesso
 
     def __lt__(self, v):
-        return self.estimativa < v.estimativa
+        return self.distancia < v.distancia
 
     def __eq__(self, v):
-        return self.estimativa == v.estimativa
+        return self.distancia == v.distancia
 
     def __eq__(self, v):
         return self.id == v.id
 
     def __gt__(self, v):
-        return self.estimativa > v.estimativa
+        return self.distancia > v.distancia

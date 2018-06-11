@@ -225,7 +225,13 @@ for item_pre in pre:
 #grafo.Breadth_first_search('Python')
 #grafo.imprime_Grafo_com_Destino('Python', 'Go')
 
+#grafo.breadth_first_search('SML')
+#grafo.depth_first_search()
+lista = grafo.ordenacaoTopologica()
 
+for item in lista:
+    print item
+    
 grafo2 = Grafo()
 grafo2.novo_vertice('a')
 grafo2.novo_vertice('b')
@@ -233,10 +239,12 @@ grafo2.novo_vertice('c')
 grafo2.novo_vertice('d')
 
 grafo2.nova_aresta('a','b', 5)
-#grafo2.nova_aresta('a','c', 5)
-#grafo2.nova_aresta('b','d', 5)
+grafo2.nova_aresta('a','c', 5)
+grafo2.nova_aresta('b','d', 5)
 grafo2.nova_aresta('c','d', 5)
 grafo2.nova_aresta('d','a', 5)
 
-grafo2.breadth_first_search('d')
+#grafo2.breadth_first_search('d')
+#grafo2.depth_first_search()
+
 #grafo.imprime_grafo('a', 'd')
