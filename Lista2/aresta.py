@@ -25,4 +25,4 @@ class Aresta():
 		return self.peso
 	
 	def __str__(self):
-		return "A(%s----%i---->%s)" % (self.origem.getId(),self.peso,self.destino.getId())
+		return "Aresta(%s----%i---->%s)" % (self.origem.getId(),self.peso,self.destino.getId())

@@ -4,7 +4,6 @@ class Vertice():
         self.distancia = 999999
         self.input = 0
         self.output = 0
-        self.visitado = False
         self.cor = "BRANCO"
         self.pai = []
 
@@ -39,8 +38,8 @@ class Vertice():
         return self.distancia
 
     def __str__(self):
-        return (" Vertice  : %s \n Estimativa: %i \n Tempo(%i\%i): " % (
-            self.id, self.distancia, self.input, self.output))  # imprimir o predecesso
+        return (" Vertice  : %s \n Cor: %s \n Distancia: %i \n Tempo(%i\%i): " % (
+            self.id, self.cor, self.distancia, self.input, self.output))  # imprimir o predecesso
 
     def __lt__(self, v):
         return self.distancia < v.distancia

@@ -216,7 +216,9 @@ print (ano[2010][0])
 for item_ano in ano.values():
     for vertice in item_ano:
         grafo.novo_vertice(vertice)
-        print("Criado novo vertice: ", vertice)
+        print("Criado novo vertice: ")
+        print grafo.busca_vertice(vertice) 
+
 
 for item_pre in pre:
     grafo.nova_aresta(item_pre[0], item_pre[1], 0)
@@ -227,10 +229,10 @@ for item_pre in pre:
 
 #grafo.breadth_first_search('SML')
 #grafo.depth_first_search()
-lista = grafo.ordenacaoTopologica()
+#lista = grafo.ordenacaoTopologica()
 
-for item in lista:
-    print item
+#for item in lista:
+#    print item
     
 grafo2 = Grafo()
 grafo2.novo_vertice('a')

@@ -38,15 +38,51 @@ class Grafo:
         else:
             return False
 
-    ####################################################################
+    ######## Breadth First Search - Largura ##########
+
+    def busca_adjacentes(self, u):  # Mtodo recebe um vertice
+        lista = []
+        for i in range(len(self.lista_arestas)):
+            origem = self.lista_arestas[i].getOrigem()
+            destino = self.lista_arestas[i].getDestino()
+            if (u.getId() == origem.getId()) and (destino.getCor() == "BRANCO"):
+                lista.append(destino)
+        return lista
+
+    def breadth_first_search(self, identificador):
+        fonte = self.busca_vertice(identificador)
+        if fonte is None:
+            return "Vertce Nulo"
+
+        for i in range(0,len(self.lista_vertices)):
+            self.lista_vertices[i].setCor("BRANCO")
+            self.lista_vertices[i].pai = []
+            self.lista_vertices[i].setDistancia(99999999)    
+        fonte.setCor("CINZA")
+        fonte.pai = None
+        lista = [fonte]
+
+        while len(lista) != 0:
+            u = lista.pop(0)
+            print u
+            lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
+            for adj in lista_adjacentes:
+                adj.pai.append(u.getId())
+                adj.setCor("CINZA")
+                adj.distancia += 1
+                lista.append(adj)
+            u.setCor("PRETO")
+
+    ########## Depth First Search - Profundidade ##########
 
     def depth_first_search(self):
         self.tempo = 0
         for v in self.lista_vertices:
             v.setCor("BRANCO")
-            v.input = 0
-            v.output = 0
+            v.setImput(0)
+            v.setOutput(0)
             v.pai = []
+
         for v in self.lista_vertices:
             if (v.getCor() == "BRANCO"):
                 self.visita(v)
@@ -66,13 +102,14 @@ class Grafo:
         u.setCor("PRETO")
         print("Voltando para: ", u.pai)
 
+    ########## Ordenacao Topologica ##########
     def ordenacaoTopologica(self):
         self.tempo = 0
         lista_ordenacao = []
         for v in self.lista_vertices:
             v.setCor("BRANCO")
-            v.input = 0
-            v.output = 0
+            v.setImput(0)
+            v.setOutput(0)
             v.pai = []
         for v in self.lista_vertices:
             if (v.getCor() == "BRANCO"):
@@ -96,67 +133,24 @@ class Grafo:
         lista_final.append(u)
         print("Voltando para: ", u.pai)
 
+    ########## Ordenacao Topologica ##########    
+    def PRIM(self, w, r):
+        for v in self.lista_vertices:
+            v.setDistancia(99999)
+            v.pai = []
+        r.setDistancia(0)
+        lista = self.lista_vertices[:]
+        while lista:
+            u = extract_min(lista)
 
-    ####################################################################
-
-
-    def busca_adjacentes(self, u):  # Mtodo recebe um vertice
-        lista = []
-        for i in range(len(self.lista_arestas)):
-            origem = self.lista_arestas[i].getOrigem()
-            destino = self.lista_arestas[i].getDestino()
-            if (u.getId() == origem.getId()) and (destino.getCor() == "BRANCO"):
-                lista.append(destino)
-        return lista
-
-    def breadth_first_search(self, identificador):
-        fonte = self.busca_vertice(identificador)
-        if fonte is None:
-            return "Vertce Nulo"
-
-        for i in range(0,len(self.lista_vertices)):
-            self.lista_vertices[i].setCor("BRANCO")
-            self.lista_vertices[i].pai = []
-            self.lista_vertices[i].distancia = 99999999    
-        fonte.setCor("CINZA")
-        fonte.pai = None
-        lista = [fonte]
-
-        while len(lista) != 0:
-            u = lista.pop(0)
-            print u
             lista_adjacentes = self.busca_adjacentes(u)  # retorna adjacente no visitado
-            for adj in lista_adjacentes:
-                adj.pai.append(u.getId())
-                adj.setCor("CINZA")
-                adj.distancia += 1
-                lista.append(adj)
-            u.setCor("PRETO")
+            for adj in lista_adjacentes:    
+                if (v pertence lista) & (w < adj.getDistancia()):
+                    adj.pai.append(u.getId())
+                    adj.setDistancia(w)
 
 
-
-    ####################################################################
-
-    def imprime_Grafo_com_Destino(self, origem, destino):
-        destino_Aux = self.busca_vertice(destino)
-        if len(destino_Aux.pai) == 0:
-            print("Nao ha caminho")
-        else:
-            print(destino)
-            self.imprime_grafo(origem, destino)
-
-    def imprime_grafo(self, origem, destino):
-        if origem == destino:
-            print("Fim")
-        else:
-            destino_Aux = self.busca_vertice(destino)
-            if len(destino_Aux.pai) == 0:
-                print("Nao ha caminho")
-            else:
-                print(destino_Aux.pai[0])
-                self.imprime_grafo(origem, destino_Aux.pai[0])
-
-#################################################################### 
+    #################################################################### 
     def relaxa_Vertice(self, u, v, w):
         if v.getEstimativa() > (u.getEstimativa() + w.getPeso()):
             v.setEstimativa(u.getEstimativa() + w.getPeso())
