@@ -136,7 +136,7 @@ class Grafo:
         self.tempo += 1
         u.setOutput(self.tempo)
         u.setCor("PRETO")
-        lista_final.append(u)
+        lista_final.insert(0,u)
         print("Voltando para: ", u.pai)
 
     ########## PRIM ##########    
