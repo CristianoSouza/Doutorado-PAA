@@ -208,12 +208,11 @@ pre = [
 ]
 
 from grafo import Grafo
+from subcadeia import SubCadeia
 
 grafo = Grafo()
 
-
-print (ano[2010][0])
-for item_ano in ano.values():
+'''for item_ano in ano.values():
     for vertice in item_ano:
         grafo.novo_vertice(vertice)
         print("Criado novo vertice: ")
@@ -223,7 +222,7 @@ for item_ano in ano.values():
 for item_pre in pre:
     grafo.nova_aresta(item_pre[0], item_pre[1], 0)
     print("Criada nova aresta E(", item_pre[0], ",", item_pre[1], ")!")
-
+'''
 #grafo.Breadth_first_search('Python')
 #grafo.imprime_Grafo_com_Destino('Python', 'Go')
 
@@ -240,13 +239,32 @@ grafo2.novo_vertice('b')
 grafo2.novo_vertice('c')
 grafo2.novo_vertice('d')
 
-grafo2.nova_aresta('a','b', 5)
+grafo2.nova_aresta('a','b', 15)
+grafo2.nova_aresta('b','a', 15)
 grafo2.nova_aresta('a','c', 5)
-grafo2.nova_aresta('b','d', 5)
-grafo2.nova_aresta('c','d', 5)
-grafo2.nova_aresta('d','a', 5)
+grafo2.nova_aresta('c','a', 5)
+#grafo2.nova_aresta('b','d', 6)
+grafo2.nova_aresta('c','d', 2)
+grafo2.nova_aresta('d','c', 2)
+grafo2.nova_aresta('d','a', 11)
+grafo2.nova_aresta('a','d', 11)
+grafo2.nova_aresta('d','b', 1)
+grafo2.nova_aresta('b','d', 1)
 
 #grafo2.breadth_first_search('d')
 #grafo2.depth_first_search()
+#AGM = grafo2.PRIM('a')
+#for item in AGM:
+#    print("Aresta("+ str(item.getPai()) +","+ str(item.getId()) +") = " + str(item.getDistancia()))
 
 #grafo.imprime_grafo('a', 'd')
+
+
+subcadeia = SubCadeia()
+X = "ABCB"
+Y = "BDCAB"
+print len(X)
+print len(Y)
+subcadeia.SCM(X,4,Y,5)
+subcadeia.imprimir_matriz_c(4,5)
+subcadeia.imprimir_matriz_b(4,5)

@@ -6,6 +6,7 @@ class Vertice():
         self.output = 0
         self.cor = "BRANCO"
         self.pai = []
+        self.estimativa = 0
 
     def setVisitado(self, valor):
         self.visitado = valor
@@ -25,6 +26,12 @@ class Vertice():
     def getId(self):
         return self.id
 
+    def getPai(self):
+        return self.pai
+    
+    def setPai(self, pai):
+        self.pai = pai
+
     def setImput(self, inp):
         self.input = inp
 
@@ -34,8 +41,11 @@ class Vertice():
     def setDistancia(self, distancia):
         self.distancia = distancia
 
-    def getEstimativa(self):
+    def getDistancia(self):
         return self.distancia
+
+    def getEstimativa(self):
+        return self.estimativa
 
     def __str__(self):
         return (" Vertice  : %s \n Cor: %s \n Distancia: %i \n Tempo(%i\%i): " % (
