@@ -1,7 +1,7 @@
 
 from vertice import Vertice
 from aresta import Aresta
-import networkx as nx
+#import networkx as nx
 import numpy as n
 import Queue as q
 from subset import Subset
@@ -33,6 +33,14 @@ class Grafo:
                 return i
         else:
             return None
+
+    def busca_indice_vertice(self, identificador):
+        for i in range(0,len(self.lista_vertices)):
+            if identificador == self.lista_vertices[i].getId():
+                return i
+        else:
+            return None
+
 
     def esta_vazio(self):
         if len(self.lista_vertices) == 0:
@@ -143,37 +151,48 @@ class Grafo:
     ########## PRIM ##########    
     def PRIM(self, vertice_inicio):
         fila_boolean = {}
-        AGM = []
+        pai = {}
+        key= {}
+        
         for v in self.lista_vertices:
-            v.setDistancia(99999)
-            v.pai = None
+            key[v.getId()] = 99999
+            pai[v.getId()] = None
+
+
         r = self.busca_vertice(vertice_inicio)
-        r.setDistancia(0)
+        key[r.getId()] = 0
         fila = q.PriorityQueue()
         for item in self.lista_vertices:
-            fila.put([item.getDistancia(), item])
+            fila.put([key[item.getId()], item])
             fila_boolean[item.getId()] = 1
         
+
         while ( not fila.empty()):
             u = fila.get(False)[1]
             fila_boolean[u.getId()] = 0
             print ("u: " + u.getId())
 
             print fila_boolean
-            lista_adjacentes, pesos = self.busca_adjacentes(u)  # retorna adjacente no visitado
+            lista_adjacentes, pesos = self.busca_adjacentes(u) 
             for i in range(0,len(lista_adjacentes)):  
-                #print(u.getId(),lista_adjacentes[i].getId())
-                #print(i)  
-                #print (pesos[i],lista_adjacentes[i].getDistancia() )
-                if (fila_boolean[lista_adjacentes[i].getId()] == 1) and (pesos[i] < lista_adjacentes[i].getDistancia()):
 
-                    print (" Fila booleana:" + str(fila_boolean[lista_adjacentes[i].getId()]))
-                    print("""ATUALIZANDO DISTANCIA VERTICES ("""+ str(u.getId()) +""","""+ str(lista_adjacentes[i].getId()) +""") COM PESO = """ + str(pesos[i]))
-                    lista_adjacentes[i].setPai(u.getId())
-                    lista_adjacentes[i].setDistancia(pesos[i])
-                    
-                    AGM.append(lista_adjacentes[i])
-        return AGM
+                if (fila_boolean[lista_adjacentes[i].getId()] == 1) and (pesos[i] < key[lista_adjacentes[i].getId()]):
+
+                    #print (" Fila booleana:" + str(fila_boolean[lista_adjacentes[i].getId()]))
+                    #print("""ATUALIZANDO DISTANCIA VERTICES ("""+ str(u.getId()) +""","""+ str(lista_adjacentes[i].getId()) +""") COM PESO = """ + str(pesos[i]))
+                    #lista_adjacentes[i].setPai(u.getId())
+                    #lista_adjacentes[i].setDistancia(pesos[i])
+                    #AGM[lista_adjacentes[i].getId()] = lista_adjacentes[i]
+                    pai[lista_adjacentes[i].getId()] = u
+                    key[lista_adjacentes[i].getId()] = pesos[i]
+                    #AGM.append("Arresta ( " + u.getId() + " , " + lista_adjacentes[i].getId() + ") = " + str(pesos[i]))
+
+
+
+        return pai, key
+
+    def Kruskal(self ):
+        AGM = []
 
     def verifica_key(self, AGM, nome_item):
         for item in AGM.keys():
@@ -217,19 +236,40 @@ class Grafo:
 
     def generate_mti(self, vetor):
         subsets = []
+        nivel = 256
         self.makeSet(subsets, vetor)
 
-        j = 0
-        while j < len(vetor)-1:
-            x = self.find(subsets, vetor[j])
-            y = self.find(subsets, vetor[j+1])
-     
-            if (x == y):
-                print("x e y iguais")
-            self.union(subsets, x, y)
-            j+=1
-        return subsets
+        while (nivel > 0):
+            print ("Nivel da Agua: " + str(nivel))
+            j = 0
+            while j < len(vetor):
+                if (vetor[j] >= nivel ):
+                    print ("Nivel da agua: " + str(nivel) + " VETOR: " + str(vetor[j]))
+                    if ( j > 0):
+                        if(vetor[j-1] >= nivel):
+                            x = self.find(subsets, vetor[j-1])
+                            y = self.find(subsets, vetor[j])
+             
+                            #if (x == y):
+                            #    print("x e y iguais")
+                            print ("vetor: " + str(vetor[j-1]) + "concatenado com  vetor: " + str(vetor[j]))
+                            self.union(subsets, x, y)
 
+                    if(j < len(vetor)-1):
+                        if(vetor[j+1] >= nivel):
+                            x = self.find(subsets, vetor[j])
+                            y = self.find(subsets, vetor[j+1])
+
+                            print ("vetor: " + str(vetor[j]) + "concatenado com  vetor: " + str(vetor[j+1]))
+                            #if (x == y):
+                            #    print("x e y iguais")
+                            self.union(subsets, x, y)
+
+
+                j+=1
+            nivel-=1
+        return subsets
+'''
     #################################################################### 
     def relaxa_Vertice(self, u, v, w):
         if v.getEstimativa() > (u.getEstimativa() + w.getPeso()):
@@ -386,3 +426,4 @@ class Grafo:
                 vertices_conexos.append(conj1.union(conj2))
 
         return MST
+'''

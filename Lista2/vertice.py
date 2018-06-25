@@ -13,7 +13,7 @@ class Vertice():
         self._input = 0
         self._output = 0
         self.cor = "BRANCO"
-        self.pai = None
+        self.pai = []
 
     def setCor(self, valor):
         self.cor = valor

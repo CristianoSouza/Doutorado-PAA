@@ -260,14 +260,15 @@ grafo2.nova_aresta('a','d', 11)
 grafo2.nova_aresta('d','b', 1)
 grafo2.nova_aresta('b','d', 1)
 '''
+
 grafo2.nova_aresta('a','b', 4)
 grafo2.nova_aresta('b','a', 4)
 
 grafo2.nova_aresta('a','h', 8)
 grafo2.nova_aresta('h','a', 8)
 
-grafo2.nova_aresta('b','c', 8)
 grafo2.nova_aresta('c','b', 8)
+grafo2.nova_aresta('b','c', 8)
 
 grafo2.nova_aresta('b','h', 11)
 grafo2.nova_aresta('h','b', 11)
@@ -304,12 +305,85 @@ grafo2.nova_aresta('f','e', 10)
 #grafo2.breadth_first_search('d')
 #grafo2.depth_first_search()
 
+'''
+grafo2.novo_vertice('A')
+grafo2.novo_vertice('B')
+grafo2.novo_vertice('C')
+grafo2.novo_vertice('D')
+grafo2.novo_vertice('E')
+grafo2.novo_vertice('F')
+grafo2.novo_vertice('G')
+grafo2.novo_vertice('H')
+
+grafo2.nova_aresta('B','A', 42)
+grafo2.nova_aresta('B', 'A', 42)
+grafo2.nova_aresta('A', 'B', 42)
+grafo2.nova_aresta('C', 'A', 61)
+grafo2.nova_aresta('A', 'C', 61)
+grafo2.nova_aresta('C', 'B', 14)
+grafo2.nova_aresta('B', 'C', 14)
+grafo2.nova_aresta('D', 'A', 30)
+grafo2.nova_aresta('A', 'D', 30)
+grafo2.nova_aresta('D', 'B', 87)
+grafo2.nova_aresta('B', 'D', 87)
+grafo2.nova_aresta('D', 'C', 20)
+grafo2.nova_aresta('C', 'D', 20)
+grafo2.nova_aresta('E', 'A', 17)
+grafo2.nova_aresta('A', 'E', 17)
+grafo2.nova_aresta('E', 'B', 28)
+grafo2.nova_aresta('B', 'E', 28)
+grafo2.nova_aresta('E', 'C', 81)
+grafo2.nova_aresta('C', 'E', 81)
+grafo2.nova_aresta('E', 'D', 34)
+grafo2.nova_aresta('D', 'E', 34)
+grafo2.nova_aresta('F', 'A', 82)
+grafo2.nova_aresta('A', 'F', 82)
+grafo2.nova_aresta('F', 'B', 70)
+grafo2.nova_aresta('B', 'F', 70)
+grafo2.nova_aresta('F', 'C', 21)
+grafo2.nova_aresta('C', 'F', 21)
+grafo2.nova_aresta('F', 'D', 33)
+grafo2.nova_aresta('D', 'F', 33)
+grafo2.nova_aresta('F', 'E', 41)
+grafo2.nova_aresta('E', 'F', 41)
+grafo2.nova_aresta('G', 'A', 31)
+grafo2.nova_aresta('A', 'G', 31)
+grafo2.nova_aresta('G', 'B', 19)
+grafo2.nova_aresta('B', 'G', 19)
+grafo2.nova_aresta('G', 'C', 8)
+grafo2.nova_aresta('C', 'G', 8)
+grafo2.nova_aresta('G', 'D', 91)
+grafo2.nova_aresta('D', 'G', 91)
+grafo2.nova_aresta('G', 'E', 34)
+grafo2.nova_aresta('E', 'G', 34)
+grafo2.nova_aresta('G', 'F', 19)
+grafo2.nova_aresta('F', 'G', 19)
+grafo2.nova_aresta('H', 'A', 11)
+grafo2.nova_aresta('A', 'H', 11)
+grafo2.nova_aresta('H', 'B', 33)
+grafo2.nova_aresta('B', 'H', 33)
+grafo2.nova_aresta('H', 'C', 29)
+grafo2.nova_aresta('C', 'H', 29)
+grafo2.nova_aresta('H', 'D', 10)
+grafo2.nova_aresta('D', 'H', 10)
+grafo2.nova_aresta('H', 'E', 82)
+grafo2.nova_aresta('E', 'H', 82)
+grafo2.nova_aresta('H', 'F', 32)
+grafo2.nova_aresta('F', 'H', 32)
+grafo2.nova_aresta('H', 'G', 59)
+grafo2.nova_aresta('G', 'H', 59)
+'''
+'''
 ini = time.time()
-AGM = grafo2.PRIM('a')
+pai, key = grafo2.PRIM('a')
 fin = time.time()
 tempo_execucao = fin-ini
-for item in AGM:
-    print( "Aresta("+ str(item.getPai()) +","+ str(item.getId()) +") = " + str(item.getDistancia()))
+#for item in AGM:
+    #print item
+    #print( "Vertice: " + str(item.getId()) +") = " + str(item.getDistancia()))
+for item in key:
+    print key[item]
+    #print( item + "Aresta("+ str(AGM[item].getPai()) +","+ str(AGM[item].getId()) +") = " + str(AGM[item].getDistancia()))
 print ("TEMPO DE EXECUCAO: " + str(tempo_execucao))
 '''
 #grafo.imprime_grafo('a', 'd')
@@ -324,7 +398,7 @@ for i in range(0,len(vetor)):
 
 
 subcadeia = SubCadeia()
-'''
+
 
 '''
 #Exemplo 1
