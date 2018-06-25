@@ -137,6 +137,9 @@ class Grafo:
         u.setCor("PRETO")
         lista_final.insert(0,u)
 
+        print("Voltando para: ", u.pai)
+
+
     ########## PRIM ##########    
     def PRIM(self, vertice_inicio):
         fila_boolean = {}
