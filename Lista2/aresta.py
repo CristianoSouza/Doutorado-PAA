@@ -1,6 +1,10 @@
 
 
 class Aresta():
+	origem = None
+	destino = None
+	peso = 0
+	
 	def __init__(self,origem,destino,peso = 0):
 		self.origem = origem
 		self.destino = destino

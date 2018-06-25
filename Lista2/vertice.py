@@ -1,19 +1,20 @@
 class Vertice():
+
+    _id = 0
+    distancia = 0
+    _input = 0
+    _output = 0
+    cor = "BRANCO"
+    pai = None
+
     def __init__(self, id):
-        self.id = id
+        self._id = id
         self.distancia = 999999
-        self.input = 0
-        self.output = 0
+        self._input = 0
+        self._output = 0
         self.cor = "BRANCO"
-        self.pai = []
-        self.estimativa = 0
+        self.pai = None
 
-    def setVisitado(self, valor):
-        self.visitado = valor
-
-    def getVisitado(self):
-        return self.visitado
-    
     def setCor(self, valor):
         self.cor = valor
 
@@ -21,10 +22,10 @@ class Vertice():
         return self.cor
 
     def setId(self, id):
-        self.id = id
+        self._id = id
 
     def getId(self):
-        return self.id
+        return self._id
 
     def getPai(self):
         return self.pai
@@ -33,10 +34,10 @@ class Vertice():
         self.pai = pai
 
     def setImput(self, inp):
-        self.input = inp
+        self._input = inp
 
     def setOutput(self, out):
-        self.output = out
+        self._output = out
 
     def setDistancia(self, distancia):
         self.distancia = distancia
@@ -48,8 +49,8 @@ class Vertice():
         return self.estimativa
 
     def __str__(self):
-        return (" Vertice  : %s \n Cor: %s \n Distancia: %i \n Tempo(%i\%i): " % (
-            self.id, self.cor, self.distancia, self.input, self.output))  # imprimir o predecesso
+        return (" %s  Tempo(%i\%i): " % (
+            self._id,self._input, self._output)) 
 
     def __lt__(self, v):
         return self.distancia < v.distancia
@@ -58,7 +59,7 @@ class Vertice():
         return self.distancia == v.distancia
 
     def __eq__(self, v):
-        return self.id == v.id
+        return self._id == v._id
 
     def __gt__(self, v):
         return self.distancia > v.distancia

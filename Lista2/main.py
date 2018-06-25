@@ -209,10 +209,12 @@ pre = [
 
 from grafo import Grafo
 from subcadeia import SubCadeia
+from MT1 import MTI
+import time
 
 grafo = Grafo()
-
-'''for item_ano in ano.values():
+'''
+for item_ano in ano.values():
     for vertice in item_ano:
         grafo.novo_vertice(vertice)
         print("Criado novo vertice: ")
@@ -222,23 +224,30 @@ grafo = Grafo()
 for item_pre in pre:
     grafo.nova_aresta(item_pre[0], item_pre[1], 0)
     print("Criada nova aresta E(", item_pre[0], ",", item_pre[1], ")!")
-'''
+
 #grafo.Breadth_first_search('Python')
 #grafo.imprime_Grafo_com_Destino('Python', 'Go')
 
 #grafo.breadth_first_search('SML')
 #grafo.depth_first_search()
-#lista = grafo.ordenacaoTopologica()
+lista = grafo.ordenacaoTopologica()
 
-#for item in lista:
-#    print item
-    
+for item in lista:
+    print item
+'''
+
 grafo2 = Grafo()
 grafo2.novo_vertice('a')
 grafo2.novo_vertice('b')
 grafo2.novo_vertice('c')
 grafo2.novo_vertice('d')
+grafo2.novo_vertice('e')
+grafo2.novo_vertice('f')
+grafo2.novo_vertice('g')
+grafo2.novo_vertice('h')
+grafo2.novo_vertice('i')
 
+'''
 grafo2.nova_aresta('a','b', 15)
 grafo2.nova_aresta('b','a', 15)
 grafo2.nova_aresta('a','c', 5)
@@ -250,21 +259,106 @@ grafo2.nova_aresta('d','a', 11)
 grafo2.nova_aresta('a','d', 11)
 grafo2.nova_aresta('d','b', 1)
 grafo2.nova_aresta('b','d', 1)
+'''
+grafo2.nova_aresta('a','b', 4)
+grafo2.nova_aresta('b','a', 4)
 
+grafo2.nova_aresta('a','h', 8)
+grafo2.nova_aresta('h','a', 8)
+
+grafo2.nova_aresta('b','c', 8)
+grafo2.nova_aresta('c','b', 8)
+
+grafo2.nova_aresta('b','h', 11)
+grafo2.nova_aresta('h','b', 11)
+
+grafo2.nova_aresta('c','i', 2)
+grafo2.nova_aresta('i','c', 2)
+
+grafo2.nova_aresta('c','d', 7)
+grafo2.nova_aresta('d','c', 7)
+
+grafo2.nova_aresta('c','f', 4)
+grafo2.nova_aresta('f','c', 4)
+
+grafo2.nova_aresta('i','h', 7)
+grafo2.nova_aresta('h','i', 7)
+
+grafo2.nova_aresta('i','g', 6)
+grafo2.nova_aresta('g','i', 6)
+
+grafo2.nova_aresta('g','h', 1)
+grafo2.nova_aresta('h','g', 1)
+
+grafo2.nova_aresta('g','f', 2)
+grafo2.nova_aresta('f','g', 2)
+
+grafo2.nova_aresta('d','f', 14)
+grafo2.nova_aresta('f','d', 14)
+
+grafo2.nova_aresta('d','e', 9)
+grafo2.nova_aresta('e','d', 9)
+
+grafo2.nova_aresta('e','f', 10)
+grafo2.nova_aresta('f','e', 10)
 #grafo2.breadth_first_search('d')
 #grafo2.depth_first_search()
-#AGM = grafo2.PRIM('a')
-#for item in AGM:
-#    print("Aresta("+ str(item.getPai()) +","+ str(item.getId()) +") = " + str(item.getDistancia()))
 
+ini = time.time()
+AGM = grafo2.PRIM('a')
+fin = time.time()
+tempo_execucao = fin-ini
+for item in AGM:
+    print( "Aresta("+ str(item.getPai()) +","+ str(item.getId()) +") = " + str(item.getDistancia()))
+print ("TEMPO DE EXECUCAO: " + str(tempo_execucao))
+'''
 #grafo.imprime_grafo('a', 'd')
+vetor = [1, 5, 2, 2, 7, 4, 1, 3]
+#for i in range(0,255):
+#    vetor.append(i)
+
+subsets = grafo.generate_mti(vetor)
+print vetor
+for i in range(0,len(vetor)):
+    print("Pai: " + str(subsets[i].pai) + "Item: " + str(subsets[i].numero)) 
 
 
 subcadeia = SubCadeia()
+'''
+
+'''
+#Exemplo 1
 X = "ABCB"
 Y = "BDCAB"
 print len(X)
 print len(Y)
-subcadeia.SCM(X,4,Y,5)
-subcadeia.imprimir_matriz_c(4,5)
-subcadeia.imprimir_matriz_b(4,5)
+#tamanho_sub_cadeia = subcadeia.SCM(X,len(X),Y,len(Y))[0]
+print ("Cadeia 1: " + X)
+print ("Tamanho Cadeia 1: " + str(len(X)))
+print ("Cadeia 2: " + Y)
+print ("Tamanho Cadeia 2: " + str(len(Y)))
+
+tamanho_sub_cadeia = subcadeia.SCM_memoizado(X,len(X),Y,len(Y))
+print ("Tamanho da subcadeia: " + str(tamanho_sub_cadeia))
+subcadeia.imprimir_matriz_c(len(X),len(Y))
+subcadeia.imprimir_matriz_b(len(X),len(Y))
+subcadeia.recupera_SCM(X,len(X),len(Y))
+print("Maior Subcadeia encontrada: ")
+print(subcadeia.getSubcadeia())
+
+#Exemplo 2
+X = "AABCBB"
+Y = "FABABDCKBJB"
+print len(X)
+print len(Y)
+print ("Cadeia 1: " + X)
+print ("Tamanho Cadeia 1: " + str(len(X)))
+print ("Cadeia 2: " + Y)
+print ("Tamanho Cadeia 2: " + str(len(Y)))
+tamanho_sub_cadeia = subcadeia.SCM_memoizado(X,len(X),Y,len(Y))
+print ("Tamanho da subcadeia: " + str(tamanho_sub_cadeia))
+subcadeia.imprimir_matriz_c(len(X),len(Y))
+subcadeia.imprimir_matriz_b(len(X),len(Y))
+subcadeia.recupera_SCM(X,len(X),len(Y))
+print("Maior Subcadeia encontrada: ")
+print(subcadeia.getSubcadeia())'''

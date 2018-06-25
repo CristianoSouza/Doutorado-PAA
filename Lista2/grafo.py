@@ -4,36 +4,35 @@ from aresta import Aresta
 import networkx as nx
 import numpy as n
 import Queue as q
+from subset import Subset
 
 class Grafo:
+    lista_vertices = []
+    lista_arestas = []
+    tempo = 0
 
-    def __init__(self, direcionado=True):
+    def __init__(self):
         self.lista_vertices = []
         self.lista_arestas = []
-        self.direcionado = direcionado
         self.tempo = 0
 
     def novo_vertice(self, identificador):
-        # string = input(str("Identificador do Vertice: "))
         self.lista_vertices.append(Vertice(identificador))
 
-    def busca_vertice(self, identificador):  # Mtodo recebe um int
-        for i in self.lista_vertices:
-            if identificador == i.getId():
-                return i
-        else:
-            return None
-
-    def nova_aresta(self, origem, destino, peso):  # Mtodo recebe dois identificadores
+    def nova_aresta(self, origem, destino, peso): 
         origem_aux = self.busca_vertice(origem)
         destino_aux = self.busca_vertice(destino)
         if (origem_aux is not None) and (destino_aux is not None):
             self.lista_arestas.append(Aresta(origem_aux, destino_aux, peso))
         else:
-            print("Um do Vertice ou ambos sao invalidos")
+            print("Um dos Vertices ou ambos sao invalidos")
 
-        if self.direcionado == False:
-            self.lista_arestas.append(Aresta(destino_aux, origem_aux, peso))  # Aresta(u,v) e Aresta(v,u)
+    def busca_vertice(self, identificador):
+        for i in self.lista_vertices:
+            if identificador == i.getId():
+                return i
+        else:
+            return None
 
     def esta_vazio(self):
         if len(self.lista_vertices) == 0:
@@ -43,10 +42,10 @@ class Grafo:
 
     ######## Breadth First Search - Largura ##########
 
-    def busca_adjacentes(self, u):  # Mtodo recebe um vertice
+    def busca_adjacentes(self, u):  
         lista = []
         pesos = []
-        for i in range(len(self.lista_arestas)):
+        for i in range(0,len(self.lista_arestas)):
             origem = self.lista_arestas[i].getOrigem()
             destino = self.lista_arestas[i].getDestino()
             peso = self.lista_arestas[i].getPeso()
@@ -128,7 +127,7 @@ class Grafo:
         u.setCor("CINZA")
         self.tempo += 1
         u.setImput(self.tempo)
-        lista_adjacentes = self.busca_adjacentes(u)[0]  # retorna adjacente no visitado
+        lista_adjacentes = self.busca_adjacentes(u)[0] 
         for adj in lista_adjacentes:
             adj.pai.append(u.getId())
             self.visitaOrdTop(adj,lista_final)
@@ -136,35 +135,97 @@ class Grafo:
         self.tempo += 1
         u.setOutput(self.tempo)
         u.setCor("PRETO")
-        lista_final.append(u)
-        print("Voltando para: ", u.pai)
+        lista_final.insert(0,u)
 
     ########## PRIM ##########    
-    def PRIM(self, r):
+    def PRIM(self, vertice_inicio):
         fila_boolean = {}
+        AGM = []
         for v in self.lista_vertices:
             v.setDistancia(99999)
-            v.pai = []
-        r = self.lista_vertices[0]
+            v.pai = None
+        r = self.busca_vertice(vertice_inicio)
         r.setDistancia(0)
         fila = q.PriorityQueue()
         for item in self.lista_vertices:
             fila.put([item.getDistancia(), item])
             fila_boolean[item.getId()] = 1
+        
         while ( not fila.empty()):
             u = fila.get(False)[1]
             fila_boolean[u.getId()] = 0
+            print ("u: " + u.getId())
+
+            print fila_boolean
             lista_adjacentes, pesos = self.busca_adjacentes(u)  # retorna adjacente no visitado
             for i in range(0,len(lista_adjacentes)):  
-                print(u.getId(),lista_adjacentes[i].getId())
-                print(i)  
-                print (pesos[i],lista_adjacentes[i].getDistancia() )
-                if (fila_boolean[lista_adjacentes[i].getId()] == 1) & (pesos[i] < lista_adjacentes[i].getDistancia()):
+                #print(u.getId(),lista_adjacentes[i].getId())
+                #print(i)  
+                #print (pesos[i],lista_adjacentes[i].getDistancia() )
+                if (fila_boolean[lista_adjacentes[i].getId()] == 1) and (pesos[i] < lista_adjacentes[i].getDistancia()):
+
+                    print (" Fila booleana:" + str(fila_boolean[lista_adjacentes[i].getId()]))
                     print("""ATUALIZANDO DISTANCIA VERTICES ("""+ str(u.getId()) +""","""+ str(lista_adjacentes[i].getId()) +""") COM PESO = """ + str(pesos[i]))
                     lista_adjacentes[i].setPai(u.getId())
                     lista_adjacentes[i].setDistancia(pesos[i])
-        return self.lista_vertices
+                    
+                    AGM.append(lista_adjacentes[i])
+        return AGM
 
+    def verifica_key(self, AGM, nome_item):
+        for item in AGM.keys():
+            if (nome_item == item ):
+                    print ("origem e destinos iguais")
+                    return 1
+
+        return 0
+
+    ########## ARVORE MTI ##########
+    def find(self, subsets, i):
+        #find root and make root as parent of i (path compression)
+        if (subsets[i].pai != i):
+            subsets[i].pai = self.find(subsets, subsets[i].pai)
+     
+        return subsets[i].pai
+    
+    def union(self, subsets, x, y):
+        xroot = self.find(subsets, x)
+        yroot = self.find(subsets, y)
+ 
+        #Attach smaller rank tree under root of high rank tree
+        # (Union by Rank)
+        if (subsets[xroot].rank < subsets[yroot].rank):
+            subsets[xroot].pai = yroot
+        elif (subsets[xroot].rank > subsets[yroot].rank):
+            subsets[yroot].pai = xroot
+            #If ranks are same, then make one as root and increment
+            # its rank by one
+        else:
+            subsets[yroot].pai = xroot
+            subsets[xroot].rank+= 1
+    
+    def makeSet(self,subsets, vetor):
+        #make set
+        for i in range(0,len(vetor)): 
+            subsets.append(Subset())
+            subsets[i].pai = vetor[i]
+            subsets[i].rank = 0
+            subsets[i].numero = vetor[i]
+
+    def generate_mti(self, vetor):
+        subsets = []
+        self.makeSet(subsets, vetor)
+
+        j = 0
+        while j < len(vetor)-1:
+            x = self.find(subsets, vetor[j])
+            y = self.find(subsets, vetor[j+1])
+     
+            if (x == y):
+                print("x e y iguais")
+            self.union(subsets, x, y)
+            j+=1
+        return subsets
 
     #################################################################### 
     def relaxa_Vertice(self, u, v, w):
