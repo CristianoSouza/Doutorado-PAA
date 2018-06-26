@@ -203,28 +203,36 @@ class Grafo:
         return 0
 
     ########## ARVORE MTI ##########
-    def find(self, subsets, i):
+    '''def find(self, subsets, i):
         #find root and make root as parent of i (path compression)
         if (subsets[i].pai != i):
             subsets[i].pai = self.find(subsets, subsets[i].pai)
      
         return subsets[i].pai
     
+
+    def find_set(self, subsets, i):
+        #find root and make root as parent of i (path compression)
+        if (subsets[i].pai == i):
+            return i
+        else:
+            return self.find_set(subsets, subsets[i].pai)
+
     def union(self, subsets, x, y):
         xroot = self.find(subsets, x)
         yroot = self.find(subsets, y)
- 
+        print(xroot,yroot)
         #Attach smaller rank tree under root of high rank tree
         # (Union by Rank)
-        if (subsets[xroot].rank < subsets[yroot].rank):
-            subsets[xroot].pai = yroot
-        elif (subsets[xroot].rank > subsets[yroot].rank):
+        if (subsets[xroot].rank > subsets[yroot].rank):
             subsets[yroot].pai = xroot
+        elif (subsets[xroot].rank < subsets[yroot].rank):
+            subsets[xroot].pai = yroot
             #If ranks are same, then make one as root and increment
             # its rank by one
         else:
-            subsets[yroot].pai = xroot
-            subsets[xroot].rank+= 1
+            #subsets[xroot].pai = yroot
+            subsets[yroot].rank+= 1
     
     def makeSet(self,subsets, vetor):
         #make set
@@ -233,9 +241,40 @@ class Grafo:
             subsets[i].pai = vetor[i]
             subsets[i].rank = 0
             subsets[i].numero = vetor[i]
-
+            print(i, vetor[i])
+    '''
+ 
+    def find_set(self, subsets, i):
+        if (subsets[i].pai == i):
+            return i
+        else:
+            return self.find_set(subsets, subsets[i].pai)
+    
+    def union(self, subsets, x, y):
+        xroot = self.find_set(subsets, x)
+        yroot = self.find_set(subsets, y)
+        if (xroot != yroot):
+            print("X: " + str(x) + " Root PAI X: " + str(xroot) + "  RANK: " + str(subsets[xroot].rank))
+            print("Y: " + str(y) + " Root PAI Y: " + str(yroot) + "  RANK: " + str(subsets[yroot].rank))
+            if(xroot < yroot):
+                subsets[yroot].pai = xroot
+            else:
+                subsets[xroot].pai = yroot
+        else:
+            print ("Mesma raiz")
+        
+    def makeSet(self, subsets, vetor):
+        #make set
+        for i in range(0,len(vetor)): 
+            subsets[vetor[i]] = Subset()
+            subsets[vetor[i]].pai = vetor[i]
+            subsets[vetor[i]].rank = vetor[i]
+            subsets[vetor[i]].numero = vetor[i]
+            print(i, vetor[i])
+        return subsets
+    
     def generate_mti(self, vetor):
-        subsets = []
+        subsets = {}
         nivel = 256
         self.makeSet(subsets, vetor)
 
@@ -244,28 +283,97 @@ class Grafo:
             j = 0
             while j < len(vetor):
                 if (vetor[j] >= nivel ):
-                    print ("Nivel da agua: " + str(nivel) + " VETOR: " + str(vetor[j]))
                     if ( j > 0):
-                        if(vetor[j-1] >= nivel):
-                            x = self.find(subsets, vetor[j-1])
-                            y = self.find(subsets, vetor[j])
-             
-                            #if (x == y):
-                            #    print("x e y iguais")
-                            print ("vetor: " + str(vetor[j-1]) + "concatenado com  vetor: " + str(vetor[j]))
-                            self.union(subsets, x, y)
-
+                        if(vetor[j-1] >= nivel): 
+                            if (vetor[j-1] != vetor[j]):
+                                x = vetor[j-1]
+                                y = vetor[j]
+                                self.union(subsets, x, y)
+                            else:
+                                vetor[j] = vetor[j-1]
                     if(j < len(vetor)-1):
                         if(vetor[j+1] >= nivel):
-                            x = self.find(subsets, vetor[j])
-                            y = self.find(subsets, vetor[j+1])
+                            if (vetor[j] != vetor[j+1]):
+                                x = vetor[j]
+                                y = vetor[j+1]
+                                self.union(subsets, x, y)
+                            else:
+                                vetor[j+1] = vetor[j]
+                j+=1
+            nivel-=1
+        return subsets
 
-                            print ("vetor: " + str(vetor[j]) + "concatenado com  vetor: " + str(vetor[j+1]))
-                            #if (x == y):
-                            #    print("x e y iguais")
-                            self.union(subsets, x, y)
+    def find_set_path_compression(self, subsets, i):
+        #find root and make root as parent of i (path compression)
+        if (subsets[i].pai != i):
+            subsets[i].pai = self.find_set_path_compression(subsets, subsets[i].pai)
+     
+        return subsets[i].pai
+    
+    def union_rank(self, subsets, x, y):
+        xroot = self.find_set_path_compression(subsets, x)
+        yroot = self.find_set_path_compression(subsets, y)
+        if (xroot != yroot):
+            print("X: " + str(x) + " Root PAI X: " + str(xroot) + "  RANK: " + str(subsets[xroot].rank))
+            print("Y: " + str(y) + " Root PAI Y: " + str(yroot) + "  RANK: " + str(subsets[yroot].rank))
+            #Attach smaller rank tree under root of high rank tree
+            # (Union by Rank)
+            if (subsets[xroot].rank < subsets[yroot].rank):
+                subsets[yroot].pai = xroot
+            elif (subsets[xroot].rank > subsets[yroot].rank):
+                subsets[xroot].pai = yroot
+                #If ranks are same, then make one as root and increment
+                # its rank by one
+            else:
+                print "iguaiSS"
+                #subsets[xroot].pai = yroot
+                #subsets[yroot].rank+= 1
+        else:
+            print ("Mesma raiz")
 
+    def generate_mti_rank_path_compression(self, vetor):
+        subsets = {}
+        nivel = 256
+        self.makeSet(subsets, vetor)
 
+        while (nivel > 0):
+            print ("Nivel da Agua: " + str(nivel))
+            j = 0
+            while j < len(vetor):
+                if (vetor[j] >= nivel ):
+                    print("-------------------")
+                    print ("Nivel da agua: " + str(nivel) + " VETOR: " + str(vetor[j]))
+                    if ( j > 0):
+                        if(vetor[j-1] >= nivel): 
+                            if (vetor[j-1] != vetor[j]):
+                                #x = self.find(subsets, vetor[j-1])
+                                #y = self.find(subsets, vetor[j])
+                                x = vetor[j-1]
+                                y = vetor[j]
+                                
+                                #    print("x e y iguais")
+                                print ("vetor: " + str(x) + " concatenado com  vetor: " + str(y))
+                                self.union_rank(subsets, x, y)
+                                print("VETOR [x]: " + str(subsets[x].numero) + " PAI: "+ str(subsets[x].pai) )
+                                print("VETOR [y]: " + str(subsets[y].numero) + " PAI: "+ str(subsets[y].pai) )
+                            else:
+                                vetor[j] = vetor[j-1]
+                    if(j < len(vetor)-1):
+                        if(vetor[j+1] >= nivel):
+                            if (vetor[j] != vetor[j+1]):
+                                #x = self.find(subsets, vetor[j])
+                                #y = self.find(subsets, vetor[j+1])
+                                x = vetor[j]
+                                y = vetor[j+1]
+
+                                print ("vetor: " + str(x) + " concatenado com  vetor: " + str(y))
+                                #if (x == y):
+                                #    print("x e y iguais")
+                                self.union(subsets, x, y)
+                                print("VETOR [x]: " + str(subsets[x].numero) + " PAI: "+ str(subsets[x].pai) )
+                                print("VETOR [y]: " + str(subsets[y].numero) + " PAI: "+ str(subsets[y].pai) )
+                            else:
+                                vetor[j+1] = vetor[j]
                 j+=1
             nivel-=1
         return subsets

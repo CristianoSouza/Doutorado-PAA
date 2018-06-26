@@ -211,6 +211,7 @@ from grafo import Grafo
 from subcadeia import SubCadeia
 from MT1 import MTI
 import time
+import random
 
 grafo = Grafo()
 '''
@@ -387,14 +388,18 @@ for item in key:
 print ("TEMPO DE EXECUCAO: " + str(tempo_execucao))
 '''
 #grafo.imprime_grafo('a', 'd')
-vetor = [1, 5, 2, 2, 7, 4, 1, 3]
-#for i in range(0,255):
-#    vetor.append(i)
 
-subsets = grafo.generate_mti(vetor)
+vetor = []
+#vetor = [1, 5, 2, 2, 7, 4, 1, 3]
+vetor = [10, 76, 95, 193, 181, 56, 183, 105, 141, 137]
+#for i in range(0,10):
+#    vetor.append(random.randrange(255))
 print vetor
-for i in range(0,len(vetor)):
-    print("Pai: " + str(subsets[i].pai) + "Item: " + str(subsets[i].numero)) 
+#subsets = grafo.generate_mti(vetor)
+subsets = grafo.generate_mti_rank_path_compression(vetor)
+print vetor
+for item in subsets:
+    print("Pai: " + str(subsets[item].pai) + "  Item: " + str(subsets[item].numero)) 
 
 
 subcadeia = SubCadeia()
